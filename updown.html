@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    const number = Math.floor(Math.random() * 100 + 1);
+
+    alert('Up & Down 게임!')
+    alert('1 ~ 100 중 숫자를 입력 해주세요')
+
+    for (let i = 5; i > 0; i--) {
+
+      const userAnswer = Number(prompt('1 ~ 100 까지 숫자중 정답을 입력해주세요'));
+
+      if (userAnswer < number) {
+        alert('up 더 높은 숫자를 입력해주세요');
+      }
+      else if (userAnswer > number) {
+        alert('down 더 낮은 숫자를 입력해주세요');
+      }
+      else if (userAnswer === number) {
+        alert(`${number}! 정답입니다!`);
+        break;
+      }
+      else {
+        alert('잘못된 입력입니다. 다시하세요.')
+        i++;
+      }
+      if (i === 1) {
+        alert(`기회 소진 답은 ${number}입니다.`);
+      }
+    }
+  </script>
+</body>
+
+</html>
