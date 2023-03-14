@@ -104,30 +104,43 @@
       }, 500);
 
     }
+    let clickAble = true;
 
     function 다음() {
-      slideTransition();
-      index++;
-      if (index === slideWrapper.childElementCount - 1) {
+      if (clickAble) {
+        clickAble = false;
         setTimeout(() => {
-          index = 1;
-          적용();
+          clickAble = true;
         }, 500);
+        slideTransition();
+        index++;
+        if (index === slideWrapper.childElementCount - 1) {
+          setTimeout(() => {
+            index = 1;
+            적용();
+          }, 500);
+        }
+        적용();
+        console.log(index);
       }
-      적용();
-      console.log(index);
     }
 
     function 이전() {
-      slideTransition();
-      index--;
-      if (index === 0) {
+      if (clickAble) {
+        clickAble = false;
         setTimeout(() => {
-          index = slideWrapper.childElementCount - 2;
-          적용();
+          clickAble = true;
         }, 500);
+        slideTransition();
+        index--;
+        if (index === 0) {
+          setTimeout(() => {
+            index = slideWrapper.childElementCount - 2;
+            적용();
+          }, 500);
+        }
+        적용();
       }
-      적용();
     }
 
     function 적용() {

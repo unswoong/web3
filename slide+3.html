@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+
+    .slide-container {
+      width: 200px;
+      border: red 1px solid;
+      overflow: hidden;
+    }
+
+    .slide-contents-wrapper {
+      /* width 100% */
+      display: flex;
+      width: fit-content;
+      transition: 0.5s;
+      /* 
+                transform: translateX(calc(-200px * 2));
+            */
+    }
+
+    .slide-content {
+      width: 200px;
+      height: 100px;
+      border: 1px solid #232323;
+      font-size: 50px;
+      text-align: center;
+      line-height: 100px;
+      box-sizing: border-box;
+    }
+  </style>
+
+</head>
+
+
+<body>
+  <div class="slider">
+
+    <div class="slide-container">
+      <ul class="slide-contents-wrapper">
+
+        <li class="slide-content">1</li>
+        <li class="slide-content">2</li>
+        <li class="slide-content">3</li>
+        <li class="slide-content">4</li>
+        <li class="slide-content">5</li>
+        <!-- 여기에 복사본 추가 -->
+      </ul>
+    </div>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+  </div>
+
+  <div class="slider">
+
+    <div class="slide-container">
+      <ul class="slide-contents-wrapper">
+
+        <li class="slide-content">1</li>
+        <li class="slide-content">2</li>
+        <li class="slide-content">3</li>
+        <li class="slide-content">4</li>
+        <li class="slide-content">5</li>
+        <!-- 여기에 복사본 추가 -->
+      </ul>
+    </div>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+  </div>
+
+  <div class="slider">
+
+    <div class="slide-container">
+      <ul class="slide-contents-wrapper">
+
+        <li class="slide-content">1</li>
+        <li class="slide-content">2</li>
+        <li class="slide-content">3</li>
+        <li class="slide-content">4</li>
+        <li class="slide-content">5</li>
+        <!-- 여기에 복사본 추가 -->
+      </ul>
+    </div>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+  </div>
+
+  <div class="slider">
+
+    <div class="slide-container">
+      <ul class="slide-contents-wrapper">
+
+        <li class="slide-content">1</li>
+        <li class="slide-content">2</li>
+        <li class="slide-content">3</li>
+        <li class="slide-content">4</li>
+        <li class="slide-content">5</li>
+        <!-- 여기에 복사본 추가 -->
+      </ul>
+    </div>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+  </div>
+
+  <script>
+    // 무한 캐러셀
+    // 한방향으로 계속 넘어가는것처럼 보이는 캐러셀
+
+    // 첫번째 슬라이드를 복사해서 맨 마지막에 넣는것
+    // 마지막 슬라이드에 도달했을때 트랜지션을 0으로 만들고 tranlateX를 바꾸는것
+    // 슬라이드 트랜지션 재생중에는 넘어가지 않도록 처리
+    const sliders = document.getElementsByClassName('slider');
+    // html 안에있는 슬라이더의 갯수만큼 반복
+    for (let i = 0; i < sliders.length; i++) {
+      // html의 slider에 순차적으로 makeSlider함수 적용
+      makeSlider(sliders[i])
+    }
+
+    function makeSlider(slider) {
+      const slideWrapper = slider.children[0].children[0];
+      const nextButton = slider.children[2]
+      const prevButton = slider.children[1]
+      let index = 1;
+
+      nextButton.addEventListener('click', 다음);
+      prevButton.addEventListener('click', 이전);
+
+      // 첫번째 자식을 복사해서 마지막에 넣기
+      const firstClone = slideWrapper.firstElementChild.cloneNode(true);
+      const lastClone = slideWrapper.lastElementChild.cloneNode(true);
+      slideWrapper.appendChild(firstClone);
+      slideWrapper.insertBefore(lastClone, slideWrapper.firstElementChild)
+      // 마지막 슬라이드에 도달했을때 트랜지션을 0으로 만들고 tranlateX를 바꾸는것
+
+
+      적용();
+
+      // 다음버튼을 누르면 트랜지션을 0.7로 넣고
+      // 
+      // 이동이끝나면 트랜지션을 0으로 만든다
+
+
+
+
+
+      function slideTransition() {
+        slideWrapper.style.transition = `0.5s`;;
+        setTimeout(() => {
+          slideWrapper.style.transition = `0s`;
+        }, 500);
+
+      }
+      let clickAble = true;
+
+      function 다음() {
+        if (clickAble) {
+          clickAble = false;
+          setTimeout(() => {
+            clickAble = true;
+          }, 500);
+          slideTransition();
+          index++;
+          if (index === slideWrapper.childElementCount - 1) {
+            setTimeout(() => {
+              index = 1;
+              적용();
+            }, 500);
+          }
+          적용();
+          console.log(index);
+        }
+      }
+
+      function 이전() {
+        if (clickAble) {
+          clickAble = false;
+          setTimeout(() => {
+            clickAble = true;
+          }, 500);
+          slideTransition();
+          index--;
+          if (index === 0) {
+            setTimeout(() => {
+              index = slideWrapper.childElementCount - 2;
+              적용();
+            }, 500);
+          }
+          적용();
+        }
+      }
+
+      function 적용() {
+        slideWrapper.style.transform = `translateX(${index * (-200)}px)`;
+      }
+    }
+
+        // index만 바꿔선 아무것도 바뀌지 않는다.
+        // 실질적으로 이동은 transform : translateX 속성이 해주고있기때문에
+        // index가 변경된 이후 속성을 최신화 해줘야 슬라이드에 적용된다.
+
+        // 숙제 : 이전 버튼 만들기
+  </script>
+</body>
+
+</html>
